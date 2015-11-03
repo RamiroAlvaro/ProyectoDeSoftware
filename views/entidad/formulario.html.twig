@@ -1,0 +1,121 @@
+{% extends '/index/index.html.twig' %} 
+
+{% block style %}
+    {{ parent() }}
+    <link rel="stylesheet" href="../styles/formulario.css" type="text/css" media="all" />
+{% endblock %}
+
+{% block contenido %}    
+
+    {% block error %}
+        {% if error%}
+            <h4 id="error"><img src="../../images/error.png">{{error}}<br><br>
+
+                {{entidad.errores['razon_social']}}<br> 
+                {{entidad.errores['telefono']}}<br>
+                {{entidad.errores['domicilio']}}<br>
+                {{entidad.errores['estado_entidad_id']}}<br> 
+                {{entidad.errores['necesidad_entidad_id']}}<br>
+                {{entidad.errores['servicio_prestado_id']}}<br>    
+
+
+            </h4>
+            <br><br>
+        {% endif %} 
+    {% endblock %}  
+    <div class="row">
+        <div class="col-md-4 col-md-offset-4">
+            <form id='formAltaEntidad' method='POST' action="{{host}}entidad/{{accion}}{% if entidad %}/{{entidad.id}}{% endif %}">
+
+                <div class="form-group">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <label for="razon_social"> Raz&oacute;n Social </label>
+                            <input {% if entidad %} value="{{entidad.razon_social}}"{% endif %} id="razon_social" class="form-control" type="text" name="params[entidad][razon_social]" maxlength="40" placeholder="Ingrese una razon social" required ><br><br>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <label for="telefono"> Tel&eacute;fono </label>
+                            <input {% if entidad %} value="{{entidad.telefono}}"{% endif %} id="telefono" class="form-control" type="text" name="params[entidad][telefono]" maxlength="15" placeholder="Ingrese un numero de telefono" required ><br><br>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <label for="domicilio"> Domicilio </label>
+                            <input {% if entidad %} value="{{entidad.domicilio}}"{% endif %} id="domicilio" class="form-control" type="text" name="params[entidad][domicilio]" maxlength="100" placeholder="Ingrese un domicilio" required ><br><br>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <label for="estado_entidad_id"> Estado </label>
+
+                            <select class="form-control" id="estado_entidad_id" name="params[entidad][estado_entidad_id]">
+                                {% for estado in estados %}
+                                    {% if estado.baja == 0 %}
+                                        {% if entidad.estado_entidad_id == estado.id %}
+                                            <option value="{{estado.id}}" selected>{{ estado.descripcion }}</option>
+                                        {% else %}
+                                            <option value="{{estado.id}}">{{ estado.descripcion }}</option>
+                                        {% endif %}
+                                    {% endif %}
+                                {% endfor %}
+                            </select>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <label for="necesidad_entidad_id"> Necesidad </label>
+                            <select class="form-control" id="necesidad_entidad_id" name="params[entidad][necesidad_entidad_id]">
+                                {% for necesidad in necesidades %}
+                                    {% if servicio.baja == 0 %}
+                                        {% if entidad.necesidad_entidad_id == necesidad.id %}
+                                            <option value="{{necesidad.id}}" selected>{{ necesidad.descripcion }}</option>
+                                        {% else %}
+                                            <option value="{{necesidad.id}}">{{ necesidad.descripcion }}</option>
+                                        {% endif %}
+                                    {% endif %}
+                                {% endfor %}
+                            </select>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <label for="servicio_prestado_id"> Servicio prestado </label>
+                            <select class="form-control" id="servicio_prestado_id" name="params[entidad][servicio_prestado_id]">
+                                {% for servicio in servicios %}
+                                    {% if servicio.baja == 0 %}
+                                        {% if entidad.servicio_prestado_id == servicio.id %}
+                                            <option value="{{servicio.id}}" selected>{{ servicio.descripcion }}</option>
+                                        {% else %}
+                                            <option value="{{servicio.id}}">{{ servicio.descripcion }}</option>
+                                        {% endif %}
+                                    {% endif %}
+                                {% endfor %}
+                            </select>
+                        </div>
+                    </div>
+                </div>
+
+                <button class="submit" type="submit">Enviar</button>
+                <input type="hidden" name="{{token_id}}" value="{{token}}">
+
+            </form>
+        </div>
+    </div>
+{% endblock %}

@@ -1,0 +1,53 @@
+{% extends '/index/index.html.twig' %}   
+
+{% block style %}    
+    {{ parent() }}
+    <link rel="stylesheet" href="../../styles/tablas.css" type="text/css" media="all">
+{% endblock %}
+
+{% block contenido %}
+    {% if session.tienePermisoView("donante_alta") %}
+        <div  class="row">
+            <div  class="col-md-1">
+                <a class="btn btn-second" href="{{host}}donante/alta"><img src="../../images/add.png" alt="Nuevo donante"> Nuevo Donante</a><br><br><br>
+            </div>
+        </div>
+    {% endif %}  
+    {% if mensaje != '' %}
+        <h4 id="mensajeExito"><img src="../../images/ok.png" alt="ok"> {{ mensaje }} </h4>
+        {% endif %}    
+    <div  class="row">
+        <div  class="col-md-12">
+            <table id="table" class="table table-responsive table-hover text-center">
+                <thead>
+                    <tr>
+                        <th class="text-center">Razon Social</th>
+                        <th class="text-center">Telefono</th>
+                            {% if session.accesoView('gestion') %}
+                            <th class="text-center"></th>
+                            <th class="text-center"> Acciones </th>
+                            <th class="text-center"></th>
+                            {% endif %}
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for donante in donantes %}
+                        {% if donante.baja == 0 %}
+                            <tr class="alt">
+                                <td>{{ donante.razon_social}}</td>
+                                <td>{{ donante.telefono_contacto}}</td>
+                                {% if session.get('autenticado') %}
+                                    {% if session.accesoView('gestion') %}
+                                        <td><a href="{{host}}donante/detalle/{{ donante.id }}"><img src="../../images/preview.png" alt="detalle">Detalle</a></td> 
+                                        <td><a href="{{host}}donante/modificar/{{ donante.id }}/&amp;m=c&{{token_id}}={{token}}"><img src="../../images/edit.png" alt="modificar">Modificar</a></td>
+                                        <td><a href="{{host}}donante/eliminar/{{ donante.id }}/&amp;m=b&{{token_id}}={{token}}" onclick="return confirm('seguro que desea eliminar este donante?')"><img src="../../images/delete.png" alt="eliminar">Eliminar</a></td> 
+                                            {% endif %}
+                                        {% endif %}
+                            </tr>
+                        {% endif %}
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+{% endblock %}

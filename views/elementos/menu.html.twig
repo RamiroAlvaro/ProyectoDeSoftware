@@ -1,0 +1,214 @@
+<nav class="navbar navbar-inverse navbar-static-top marginBottom-0" role="navigation">
+    <div class="navbar-header">
+        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar-collapse-1">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+        </button>
+        {% if session.get('autenticado') == false %}
+            <a class="navbar-brand" href="{{host}}">Home</a>
+        {% else %}
+            <a class="navbar-brand" href="{{host}}index/admin">Home</a>
+        {% endif %}
+    </div>
+
+    <div class="collapse navbar-collapse" id="navbar-collapse-1">
+        <ul class="nav navbar-nav">          
+            {% if session.get('autenticado') == false %}
+            <li class="dropdown">
+                <a href="#" class="dropdown-toggle" data-toggle="dropdown">Quienes somos <b class="caret"></b></a>
+                <ul class="dropdown-menu">
+                    <li><a href='#'>Nuestro equipo</a></li>
+                    <li><a href='#'>Comisión directiva</a></li>
+                    <li><a href='#'>Nuestro trabajo</a></li>
+                </ul>
+            </li>
+
+            <li class="dropdown">
+                <a href="#" class="dropdown-toggle" data-toggle="dropdown">Beneficiaros <b class="caret"></b></a>
+                <ul class="dropdown-menu">
+                    <li><a href='#'>Área social</a></li>
+                    <li><a href='#'>Organizaciones comunitarias</a></li>
+                    <li><a href='#'>Evaluación y seguimiento</a></li>
+                </ul>
+            </li>
+
+            <li class="dropdown">
+                <a href="#" class="dropdown-toggle" data-toggle="dropdown">Colaborar <b class="caret"></b></a>
+                <ul class="dropdown-menu">
+                    <li><a href='#'>Asociate</a></li>
+                    <li><a href='#'>Empresas</a></li>
+                    <li><a href='#'>Eventos</a></li>
+                    <li><a href='#'>Conectate</a></li>
+                </ul>
+            </li>
+
+         {% else %}
+
+            <li class="dropdown">
+                <a href="#" class="dropdown-toggle" data-toggle="dropdown">Alimentos <b class="caret"></b></a>
+                <ul class="dropdown-menu">
+                    {% if session.accesoView('gestion')%} 
+                    <li><a href='{{host}}alimento/alta'>Nuevo alimento</a></li>
+                    {% endif %}
+                    <li class='last'><a href='{{host}}alimento/listado'>Listado de alimentos</a></li>
+                </ul>
+            </li>
+            <li class='dropdown'>
+                <a href="#" class="dropdown-toggle" data-toggle="dropdown">Donantes <b class="caret"></b></a>
+                <ul class="dropdown-menu">
+                    {% if session.accesoView('gestion')%} 
+                    <li><a href='{{host}}donante/alta'>Nuevo donante</a></li>
+                    {% endif %}
+                    <li class='last'><a href='{{host}}donante/listado'>Listado de donantes</a></li>
+                </ul>
+            </li> 
+            <li class='dropdown'>
+                <a href="#" class="dropdown-toggle" data-toggle="dropdown">Entidades receptoras <b class="caret"></b></a>
+                <ul class="dropdown-menu">
+                    {% if session.accesoView('gestion')%}
+                        <li><a href='{{host}}entidad/alta'>Nueva entidad</a></li>
+                     {% endif %}  
+                    <li><a href='{{host}}entidad/listado'>Listado de entidades</a></li>
+                </ul>
+            </li>
+            <li class='dropdown'>
+                <a href="#" class="dropdown-toggle" data-toggle="dropdown">Pedidos/envios<b class="caret"></b></a>
+                <ul class="dropdown-menu">
+                    <li><a href='{{host}}envios/listado'>Listado de envios</a></li> 
+                    {% if session.accesoView('gestion')%}
+                    <li><a href='{{host}}donacion/alta'>Nueva recepcion</a></li>
+                    <li ><a href='{{host}}pedidomodelo/alta'>Alta de pedido</a></li>
+                    {% endif %}  
+                    <li ><a href='{{host}}pedidomodelo/listado'>Listado de pedidos</a></li>
+                    {% if session.accesoView('gestion')%}
+                    <li ><a href='{{host}}entregadirecta/alta'>Entrega directa</a></li>
+                    <li ><a href='{{host}}turnoentrega/listado'>Turnos de entrega</a></li>
+                    {% endif %} 
+                </ul>
+            </li>
+            {% if session.accesoView('admin')%} 
+            <li class='dropdown'>
+                <a href="#" class="dropdown-toggle" data-toggle="dropdown">Usuarios <b class="caret"></b></a>
+                <ul class="dropdown-menu">
+                    <li><a href='{{host}}usuario/alta'>Nueva usuario</a></li>
+                    <li ><a href='{{host}}usuario/listado'>Listado de usuarios</a></li>
+                </ul>
+            </li>
+            {% endif %}
+            <li class='dropdown'>
+                <a href="#" class="dropdown-toggle" data-toggle="dropdown">Extra<b class="caret"></b></a>
+                <ul class="dropdown-menu">
+                    <li class="dropdown dropdown-submenu">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">Servicios prestados</a>
+                        <ul class="dropdown-menu">
+                            {% if session.accesoView('gestion')%}
+                            <li><a href='{{host}}servicio/alta'>Nuevo servicio</a></li>
+                            {% endif %}
+                            <li><a href='{{host}}servicio/listado'>Listado de servicios</a></li>
+                        </ul>
+                    </li>
+                    <li class="dropdown dropdown-submenu">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">Necesidades</a>
+                        <ul class="dropdown-menu">
+                            {% if session.accesoView('gestion')%}
+                            <li><a href='{{host}}necesidad/alta'>Nueva necesidad</a></li>
+                            {% endif %}
+                            <li><a href='{{host}}necesidad/listado'>Listado de necesidades</a></li>
+                        </ul>
+                    </li>
+                    <li class="dropdown dropdown-submenu">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">Estados</a>
+                        <ul class="dropdown-menu">
+                            {% if session.accesoView('gestion')%}
+                            <li><a href='{{host}}estado/alta'>Nuevo estado</a></li>
+                            {% endif %}
+                            <li><a href='{{host}}estado/listado'>Listado de estados</a></li>
+                        </ul>
+                    </li>
+                    <li><a href='{{host}}estadisticas/ver'>Estadísticas</a>
+                     {% if session.accesoView('admin')%}   
+                    <li><a href='{{host}}configuracion/listado'>Configuracion</a>
+                        {% endif %}
+                </ul>
+            </li>
+            {% endif %}
+        </ul>
+        {% if session.get('autenticado') %}
+            <ul class="nav pull-right">
+                <li><a href='{{host}}login/cerrar' class="btn btn-default" id="btn-salir">Cerrar sesi&oacute;n</a></li>
+            </ul>
+        {% else %}
+            <ul class="nav pull-right">
+                <div class="col-lg-12">
+                    <a class="dropdown-toggle btn btn-default" href="#"  id="btn-entrar" data-toggle="dropdown" >Login</a>
+                    <div class="dropdown-menu" style="padding: -20px;">
+                        <form action="{{host}}login" method="POST" class="form-group col-lg-12" role="form">
+                            <div class="form-group">
+                                <input type="hidden" value="1" name="enviar" />
+                                <input  name="username" class="form-control " type="text" placeholder="ingrese su email" />
+                            </div>
+                            <div class="form-group">
+                                <input  name="pass" class="form-control " type="password" placeholder="contraseña" />
+                            </div>
+                            <button type="submit" class="btn btn-default ">ingresar</button>
+                        </form>
+                    </div>
+                </div>
+            </ul>
+        {% endif %}
+    </div><!-- /.navbar-collapse -->
+</nav>
+
+{#
+DECLARACION MENU MULTILEVEL
+<li class="dropdown">
+    <a href="#" class="dropdown-toggle" data-toggle="dropdown">Dropdown <b class="caret"></b></a>
+    <ul class="dropdown-menu">
+        <li><a href="#">Dropdown Link 1</a></li>
+        <li><a href="#">Dropdown Link 2</a></li>
+        <li><a href="#">Dropdown Link 3</a></li>
+        <li class="divider"></li>
+        <li class="dropdown dropdown-submenu"><a href="#" class="dropdown-toggle" data-toggle="dropdown">Dropdown Link 4</a>
+            <ul class="dropdown-menu">
+                <li><a href="#">Dropdown Submenu Link 4.1</a></li>
+                <li><a href="#">Dropdown Submenu Link 4.2</a></li>
+                <li><a href="#">Dropdown Submenu Link 4.3</a></li>
+                <li><a href="#">Dropdown Submenu Link 4.4</a></li>
+            </ul>
+        </li>
+        <li class="dropdown dropdown-submenu"><a href="#" class="dropdown-toggle" data-toggle="dropdown">Dropdown Link 5</a>
+            <ul class="dropdown-menu">
+                <li><a href="#">Dropdown Submenu Link 5.1</a></li>
+                <li><a href="#">Dropdown Submenu Link 5.2</a></li>
+                <li><a href="#">Dropdown Submenu Link 5.3</a></li>
+                <li class="divider"></li>
+                <li class="dropdown dropdown-submenu"><a href="#" class="dropdown-toggle" data-toggle="dropdown">Dropdown Submenu Link 5.4</a>
+                    <ul class="dropdown-menu">
+                        <li><a href="#">Dropdown Submenu Link 5.4.1</a></li>
+                        <li><a href="#">Dropdown Submenu Link 5.4.2</a></li>
+                        <li class="divider"></li>
+                        <li class="dropdown dropdown-submenu"><a href="#" class="dropdown-toggle" data-toggle="dropdown">Dropdown Submenu Link 5.4.3</a>
+                            <ul class="dropdown-menu">
+                                <li><a href="#">Dropdown Submenu Link 5.4.3.1</a></li>
+                                <li><a href="#">Dropdown Submenu Link 5.4.3.2</a></li>
+                                <li><a href="#">Dropdown Submenu Link 5.4.3.3</a></li>
+                                <li><a href="#">Dropdown Submenu Link 5.4.3.4</a></li>
+                            </ul>
+                        </li>
+                        <li class="dropdown dropdown-submenu"><a href="#" class="dropdown-toggle" data-toggle="dropdown">Dropdown Submenu Link 5.4.4</a>
+                            <ul class="dropdown-menu">
+                                <li><a href="#">Dropdown Submenu Link 5.4.4.1</a></li>
+                                <li><a href="#">Dropdown Submenu Link 5.4.4.2</a></li>
+                                <li><a href="#">Dropdown Submenu Link 5.4.4.3</a></li>
+                                <li><a href="#">Dropdown Submenu Link 5.4.4.4</a></li>
+                            </ul>
+                        </li>
+                    </ul>
+                </li>
+            </ul>
+        </li>
+    </ul>
+</li>
+#}

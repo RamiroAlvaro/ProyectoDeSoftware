@@ -1,0 +1,19 @@
+{% extends '/index/index.html.twig' %}
+
+{% block contenido %}
+    <ul id="detalle">
+        <li>Razon Social: {{donante.getRazonSocial}}</li>
+        <li>Apellido: {{donante.getApellidoContacto}}</li>
+        <li>Nombre: {{donante.getNombreContacto}}</li>
+        <li>Teléfono:  {{donante.getTelefonoContacto}}</li>
+        <li>E-mail: {{donante.getMailContacto}}</li>
+        <li>Domicilio: {{donante.getDomicilioContacto}}</li>
+        <li>Estado: 
+            {% if donante.getBaja == 0 %}
+                Activo
+            {% else %}
+                Anulado
+            {% endif %}
+        </li>
+    </ul>    
+{% endblock %}

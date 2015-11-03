@@ -1,0 +1,44 @@
+{% extends '/index/index.html.twig' %}   
+
+{% block style %}    
+    {{ parent() }}
+    <link rel="stylesheet" href="../../styles/tablas.css" type="text/css" media="all">
+    <link rel="stylesheet" href="../styles/formulario.css" type="text/css" media="all" />
+    <link rel="stylesheet" href="../styles/buttons.css" type="text/css" media="all" />
+{% endblock %}
+
+{% block contenido %}         
+    <table class="table table-responsive table-hover text-center">
+        <thead>
+            <tr>
+                <th class="text-center">Codigo</th>
+                <th class="text-center">Cantidad</th>
+                <th class="text-center">Contacto</th>
+                <th class="text-center">Fecha Vencimiento</th>
+                <th class="text-center">Peso</th>
+                <th class="text-center">Contenido</th>
+                <th class="text-center">Reservado</th>
+                <th class="text-center" colspan="2"> Acciones </th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for detalle in donaciones %}
+                {% if detalle.baja == 0 %}
+                    <tr>
+                        <td>{{ detalle.alimento_codigo  | replace({'_': ' '}) }}</td>
+                        <td>{{ detalle.stock}}</td>
+                        <td>{{ detalle.nombre_contacto}} {{ detalle.apellido_contacto}}</td>
+                        <td>{{ detalle.fecha_vencimiento}}</td>
+                        <td>{{ detalle.peso_paquete}}</td>
+                        <td>{{ detalle.contenido}}</td>
+                        <td>{{ detalle.reservado}}</td>
+                                {% if session.accesoView('admin') %}
+                            <td><a href="{{host}}donacion/modificar/{{ detalle.detalle_alimento_id }}&{{token_id}}={{token}}"><img src="../../images/edit.png" alt="modificar">Modificar</a></td>
+                            <td><a href="{{host}}donacion/eliminar/{{ detalle.detalle_alimento_id }}&{{token_id}}={{token}}" onclick="return confirm('seguro que desea eliminar este alimento?')"><img src="../../images/delete.png" alt="borrar">Eliminar</a></td> 
+                                {% endif %}
+                    </tr>
+                {% endif %}
+            {% endfor %}
+        </tbody>
+    </table>
+{% endblock %}

@@ -1,0 +1,133 @@
+{% extends 'index/index.html.twig' %}   
+
+{% block style %}    
+    {{ parent() }}
+    {#    <link rel="stylesheet" href="../styles/formulario.css" type="text/css" media="all" />#}
+    <link rel="stylesheet" href="../vendors/bootstrap3/datePicker/datepicker.css" type="text/css" media="all" />
+{% endblock %}
+{% block script %}
+    {{ parent() }}
+    <script src="../vendors/bootstrap3/datePicker/moment.js"></script>
+    <script src="../vendors/bootstrap3/datePicker/datepicker.js"></script>
+    <script src="../scripts/validacion.js"></script>
+
+{% endblock %}
+
+{% block contenido %}
+    {% if error %}
+        <h4>{{error}}</h4><br><br>
+    {% elseif mensaje %}
+        <h4>{{mensaje}}</h4><br><br>
+    {% endif %}
+
+
+    <form class="form-horizontal" method="POST" action="{{host}}donacion/{{accion}}{% if detalle.id %}/{{detalle.id}}{% endif %}">
+
+        <div class="form-group">
+            <label class="col-md-4 control-label" for="alimento">Alimento</label>
+            <div class="col-md-4">
+                <select  id="alimento" name="params[donacion][alimento_codigo]" class="form-control">
+                    {%  if not detalle.alimento_codigo %}
+                        <option selected="selected" value="-1">Seleccione un alimento</option>
+                    {% endif %}
+                    {% for alimento in alimentos %}
+                        {% if alimento.baja == 0 %}
+                            <option 
+                                {% if alimento.codigo == detalle.alimento_codigo %}
+                                    selected="selected"
+                                {% endif %}
+                                value="{{alimento.codigo}}" >{{alimento.codigo | replace({'_': ' '}) }}</option>
+                        {% endif %}
+                    {% endfor %}
+                </select>
+                <span class="help-block">Alimento que se recibe</span>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="col-md-4 control-label" for="selectbasic">Donante</label>
+            <div class="col-md-4">
+                <select id="donanteNombre" name="params[donacion][donante_id]" class="form-control">
+                    {%  if not detalle.donante_id %}
+                        <option selected="selected" value="-1">Seleccione un donante</option>
+                    {% endif %}
+                    {% for donante in donantes %}
+                        {% if donante.baja == 0 %}
+                            <option 
+                                {% if donante.id == detalle.donante_id %}
+                                    selected="selected"
+                                {% endif %}
+                                value="{{donante.id}}" >{{donante.nombre_contacto}} {{donante.apellido_contacto}}</option>
+                        {% endif %}
+                    {% endfor %}
+                </select>
+                <span class="help-block">Quien hace la donacion</span>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="col-md-4 control-label" for="asdas">Fecha de vencimiento</label>  
+            <div class="col-md-4">
+                <div class='input-group date' id='datetimepicker5'>
+                    <input type='text' class="form-control" data-date-format="YYYY/MM/DD"
+                           {% if detalle %}value="{{detalle.fecha_vencimiento}}"{% endif %}
+                           id="fecha_vencimiento" name="params[donacion][fecha_vencimiento]" required />
+                    <span class="input-group-addon">
+                        <span class="glyphicon glyphicon-calendar"></span>
+                    </span>
+                </div>
+                <span class="help-block">Fecha de vencimiento</span>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="col-md-4 control-label" for="textinput">Peso</label>  
+            <div class="col-md-4">
+                <input {% if detalle %}value="{{detalle.peso}}"{% endif %} 
+                                       id="peso" type="text" name="params[donacion][peso]"
+                                       required class="form-control input-md solo-numero">
+                <span class="help-block">Peso del pack completo</span>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="col-md-4 control-label" for="textinput">Contenido</label>  
+            <div class="col-md-4">
+                <input {% if detalle %}value="{{detalle.contenido}}"{% endif %} 
+                                       id="detalle_contenido" type="text" name="params[donacion][contenido]"
+                                       required  class="form-control input-md ">
+                <span class="help-block">Cantidad de unidades del pack</span>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="col-md-4 control-label" for="textinput">Stock</label>  
+            <div class="col-md-4">
+                <input {% if detalle %}value="{{detalle.stock}}"{% endif %} 
+                                       id="stock" type="text" name="params[donacion][stock]"
+                                       required class="form-control input-md solo-numero">
+                <span class="help-block">Cantidad de paquetes (con la misma fecha de vencimiento)</span>  
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-4 col-md-offset-4">
+                <button class="btn btn-primary" id="enviar">Enviar</button>
+            </div>
+        </div>
+        <input type="hidden" value="0" name="params[donacion][reservado]" />
+        <input type="hidden" value="0" name="aux" />
+        <input type="hidden" name="{{token_id}}" value="{{token}}">
+
+    </form>
+
+    <script type="text/javascript">
+        $(function() {
+            $('#datetimepicker5').datetimepicker({
+                pickTime: false
+            });
+        });
+
+    </script>
+
+{% endblock %}

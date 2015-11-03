@@ -1,0 +1,14 @@
+{% extends 'index/index.html.twig' %}
+
+{% block contenido %}
+    <label>Código:</label>
+    <p>{{alimento.codigo}}</p>
+    <label>Descripcion:</label>
+    <p>{{alimento.descripcion}}</p>
+    <label>Estado:</label>
+    {% if alimento.baja == 0 %}
+        <p>activo</p>
+    {% else %}
+        <p>anulado</p>
+    {% endif %}  
+{% endblock %}

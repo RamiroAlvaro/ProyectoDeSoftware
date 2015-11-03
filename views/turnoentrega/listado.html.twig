@@ -1,0 +1,51 @@
+{% extends '/index/index.html.twig' %}   
+{% block script %}
+    {{ parent() }}
+    <script src="../../scripts/jquery-ui.js"></script>
+    <script src="../../scripts/turnoentrega.js"></script> 
+    <script src="../../vendors/DataTables/media/js/jquery.dataTables.min.js"></script> 
+    <script src="../vendors/bootstrap3/datePicker/moment.js"></script>
+    <script src="../vendors/bootstrap3/datePicker/datepicker.js"></script>
+
+{% endblock %}
+{% block style %}
+    {{parent()}}
+    <link rel="stylesheet" href="../../vendors/DataTables/media/css/jquery.dataTables.min.css">
+    <link rel="stylesheet" href="../vendors/bootstrap3/datePicker/datepicker.css" type="text/css" media="all" />
+{% endblock %}    
+{% block contenido %}
+    {#    <label for="fecha">Fecha:</label>#}
+    {#    <input type="text" class="datepicker" id="fechaEnvios" format="YYYY/MM/DD" name="fechaEnvios">#}
+    <div class="row">
+        <div class="form-group">
+            <label class="col-md-1 control-label" for="asdas">Fecha: </label>  
+            <div class="col-md-4">
+                <div class='input-group date' id='datetimepicker5'>
+                    <input type='text' class="form-control" id="fechaEnvio" data-date-format="YYYY/MM/DD" name="fechaEnvio" required />
+                    <span class="input-group-addon">
+                        <span class="glyphicon glyphicon-calendar"></span>
+                    </span>
+                </div>
+            </div>
+            <div class="col-lg-3">
+                <button id="mostrarEnvios">Aceptar</button>
+            </div>
+        </div>
+    </div>
+    <div id="tablaEnvios" hidden>
+        <table id="tablaEnv" class="table table-responsive table-hover text-center">
+            <thead>
+                <tr>
+                    <th class="text-center">Numero</th>
+                    <th class="text-center">Hora</th>
+                    <th class="text-center">Entidad Receptora</th>
+                    <th class="text-center">¿Con envío?</th>
+                    <th class="text-center">¿Entregado?</th>
+                </tr>
+            </thead>          
+        </table>
+    </div>
+
+
+
+{% endblock %}

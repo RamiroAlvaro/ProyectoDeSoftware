@@ -1,0 +1,15 @@
+{% extends 'index/layout.html.twig' %}
+
+{% block contenido %}
+<h2>
+    {% if mensaje %}
+    {{mensaje }}
+    {% endif %}
+</h2>
+
+<p>&nbsp;</p>
+
+<a href="{{ host }}">Ir al Inicio</a> | 
+<a href="javascript:history.back(1)">Volver a la página anterior</a>
+
+{% endblock %}

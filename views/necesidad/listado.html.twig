@@ -1,0 +1,49 @@
+{% extends '/index/index.html.twig' %}   
+
+{% block style %}    
+    {{ parent() }}
+    <link rel="stylesheet" href="../../styles/tablas.css" type="text/css" media="all">
+{% endblock %}
+
+{% block contenido %}
+                 
+    
+    {% if session.accesoView('admin') %}
+                <div  class="row">
+            <div  class="col-md-1">
+            <a class="btn btn-second" href="{{host}}necesidad/alta"><img src="../../images/add.png" alt="nueva necesidad"> Nueva Necesidad</a><br><br><br>
+        </div>
+        </div>
+    {% endif %}
+    {% if mensaje != '' %}
+        <h4 id="mensajeExito"><img src="../../images/ok.png" alt="ok"> {{ mensaje }} </h4>
+    {% endif %}
+            <div  class="row">
+            <div  class="col-md-12">
+        <table id="table" class="table table-responsive table-hover text-center">
+            <thead>
+                <tr>
+                    <th class="text-center">Descripci&oacute;n</th>
+                     {% if session.accesoView('gestion') %}
+                    <th class="text-right"> Acciones </th>
+                    <th class="text-center"></th>
+                    {% endif %}
+                </tr>
+            </thead>
+            <tbody>
+                {% for necesidad in necesidades %}
+                    {% if necesidad.baja == 0 %}
+                        <tr>
+                            <td>{{ necesidad.descripcion }}</td>                           
+                            {% if session.accesoView('gestion') %}
+                                <td><a href="{{host}}necesidad/modificar/{{ necesidad.id }}/&amp;m=c&{{token_id}}={{token}}"><img src="../../images/edit.png" alt="modificar">Modificar</a></td>
+                                <td><a href="{{host}}necesidad/eliminar/{{ necesidad.id }}/&amp;m=b&{{token_id}}={{token}}" onclick="return confirm('seguro que desea eliminar este necesidad?')"><img src="../../images/delete.png" alt="eliminar">Eliminar</a></td> 
+                            {% endif %}
+                        </tr>
+                    {% endif %}
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    </div>
+{% endblock %}

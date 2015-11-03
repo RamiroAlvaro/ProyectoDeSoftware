@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        {% block script %}
+            <script src="../../vendors/jquery/jquery-1.11.1.js"></script>
+            <script src="../../vendors/bootstrap3/js/bootstrap.min.js"></script>
+            <script src="../../scripts/menuDropdown.js"></script>
+
+            <script src="../../vendors/DataTables/media/js/jquery.dataTables.min.js"></script>
+        {% endblock %}
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" /> 
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+        {% block style %}
+            <link rel="stylesheet" href="../vendors/bootstrap3/css/bootstrap.min.css">
+            <link rel="stylesheet" href="../vendors/bootstrap3/css/bootstrap-theme.min.css">
+            <link rel="stylesheet" href="../styles/base.css" type="text/css"> 
+            <link rel="stylesheet" href="../styles/menu.css" type="text/css"> 
+            <link rel="SHORTCUT ICON" href="../images/icono.ico" type="image/x-icon" />
+            <link rel="ICON" href="../images/icono.ico" type="image/ico" />
+
+            <link rel="stylesheet" href="../vendors/DataTables/media/css/jquery.dataTables.min.css">
+        {% endblock %}
+        <title>{% block title %}{% endblock %}</title>
+    </head>
+    <body>
+            <script>
+        $(document).ready(function() {
+            $('#table').dataTable({
+                "oLanguage": {
+                        "sLengthMenu": 'Mostrar de a <select>' +
+                                '<option value="3">3</option>' +
+                                '<option value="5">5</option>' +
+                                '<option value="10">10</option>' +
+                                '<option value="20">20</option>' +
+                                '<option value="30">30</option>' +
+                                '<option value="40">40</option>' +
+                                '<option value="50">50</option>' +
+                                '<option value="-1">Todo</option>' +
+                                '</select> filas'
+                    }
+            });
+        });
+        //host para usar desde scripts
+        var host = "https://" + document.domain + '/?uri=';
+    
+    </script>
+        <div class="container"> 
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="row"> 
+                        <div id="logo" class="col-md-6">
+                            <a href="{{host}}"><img id="logoheader" src="../../images/logotipo.jpg" alt="Banco de Alimentos"></a>            
+                        </div> 
+                        <div id="logo" class="col-md-3 col-md-offset-3">
+                            {% if session.get('autenticado') %}
+                                Hola {{session.get('username')}}
+                            {% endif %}
+                        </div> 
+                    </div>
+                {% block menu %}{% endblock %}
+                <div id="row"> <!-- main site content-->
+                    <div id="col-md-12">
+                        {% if encabezado %}
+                            <h2>{{encabezado}}</h2>
+                        {% endif %}
+                        {% block contenido %}
+                            {% block error %}
+                            {% endblock %}
+                        {% endblock %}
+                    </div> 
+                </div> 
+                {% include 'elementos/footer.html.twig'%}
+            </div>
+        </div>
+    </div>
+
+</body>    
+</html>

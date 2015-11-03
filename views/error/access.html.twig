@@ -1,0 +1,18 @@
+{% extends 'index/index.html.twig' %}
+
+{% block contenido %}
+<h2>
+    {% if mensaje %}
+    {{ mensaje }}
+    {% endif %}
+</h2>
+
+    <a href="{{host}}">Ir al Inicio</a> | 
+    <a href="javascript:history.back(1)">Volver a la página anterior</a>
+
+    {% if not Session.get('autenticado') %}
+
+        | <a href="{{ host }}login">Iniciar Sesión</a>
+
+    {% endif %}
+{% endblock %}

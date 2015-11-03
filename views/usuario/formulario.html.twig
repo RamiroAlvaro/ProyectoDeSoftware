@@ -1,0 +1,90 @@
+{% extends 'index/index.html.twig' %}   
+{% block script %}
+    {{ parent() }}
+{% endblock %}
+{% block style %}
+    {{ parent() }}
+    <link rel="stylesheet" href="../styles/formulario.css" type="text/css" media="all" />
+{% endblock %} 
+
+{% block contenido %}
+    {% block error %}
+        {% if error%}
+            <h4 id="error"><img src="../../images/error.png">{{error}}<br><br>
+                {{usuario.errores['username']}}<br> 
+                {{usuario.errores['rol']}}
+                <br>
+            </h4>
+            <br><br>
+        {% endif %} 
+    {% endblock %}  
+    <div class="row">
+        <div class="col-md-4 col-md-offset-4">
+
+            <form id="formAltaAlimento" role="form" onsubmit="return validarAlimento()" method="POST" action="{{host}}usuario/{{accion}}{% if usuario.id %}/{{usuario.id}}{% endif %}">
+
+                <div class="form-group">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <label for="username" >Username</label> 
+                            <input {% if usuario %}value="{{usuario.username}}"{% endif %} id="username" class="form-control" type="text" placeholder="Ingrese un sername unico" name="params[usuario][username]" maxlength="10" required>
+                            {% if actual %}
+                                <label for="rol" >Contraseña Actual</label> 
+                                <input id="password" class="form-control" type="password" name="params[usuario][passActual]" required>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <label for="rol" >Contraseña</label> 
+                            <input id="password" class="form-control" type="password" name="params[usuario][pass]" required>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <label for="rol" >Repita la contraseña</label> 
+                            <input id="re-password" class="form-control" type="password" name="params[usuario][repass]" required>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <label for="rol" >Rol</label> 
+                            <select class="form-control" name="params[usuario][rol]">
+                                {%  if not usuario.rol %}
+                                    <option selected="selected" value="-1">Seleccione un rol</option>
+                                {% endif %}
+                                {% for rol in roles %}
+                                    {%  if usuario.rol == rol%}
+                                        <option selected="selected" value="{{rol.id}}" >{{rol.nombre}}</option>
+                                    {% else %}
+                                        <option value="{{rol.id}}" >{{rol.nombre}}</option>
+                                    {% endif %}
+                                {% endfor %}
+                            </select>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <button class="btn btn-primary" type="submit">Enviar</button>
+                        </div>
+                    </div>
+                </div>
+
+                <input type="hidden" name="{{token_id}}" value="{{token}}">
+
+            </form>
+        </div>
+    </div>
+{% endblock %}

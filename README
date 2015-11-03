@@ -1,0 +1,5 @@
+ignora archivo
+git update-index --assume-unchanged ruta/archivo.php
+
+vuelve a incluir archivo
+git update-index --no-assume-unchanged ruta/archivo.php

@@ -1,0 +1,52 @@
+{% extends 'index/index.html.twig' %}   
+
+{% block style %}    
+    <link rel="stylesheet" href="../../styles/listado.css" type="text/css" media="all">
+    <link rel="stylesheet" href="../../styles/tablas.css" type="text/css" media="all">
+    <link rel="stylesheet" href="../styles/formulario.css" type="text/css" media="all" />
+{% endblock %}
+
+{% block contenido %}
+
+    {% if error%}
+        <h3>{{error}}</h3><br><br>
+    {% endif %}
+    {% if session.accesoView('admin') %}
+        <div  class="row">
+            <div  class="col-md-1">
+                <a class="btn btn-second" href="{{host}}donacion/alta"> Nueva Donacion</a><br><br><br>
+            </div>
+        </div>
+    {% endif %}
+    <div  class="row">
+        <div  class="col-md-12">
+            <table class="table table-responsive table-hover text-center">
+                <thead>
+                    <tr>
+                        <th class="text-center">Codigo</th>
+                        <th class="text-center">Descripcion</th>
+                        {% if session.accesoView('gestion') %}
+                        <th class="text-center" colspan="3"> Acciones </th>
+                        {% endif %}
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for alimento in alimentos %}
+                        {% if alimento.baja == 0 %}
+                            <tr class="alt">
+                                <td>{{ alimento.codigo}}</td>
+                                <td>{{ alimento.descripcion}}</td>
+                                {% if session.accesoView('gestion') %}
+                                <td><a href="{{host}}alimento/detalle/{{ alimento.id }}" class="verde">Detalle</a></td> 
+                                
+                                    <td><a href="{{host}}alimento/modificar/{{ alimento.id }}/&amp;m=c&{{token_id}}={{token}}" class="amarillo">Modificar</a></td>
+                                    <td><a href="{{host}}alimento/eliminar/{{ alimento.id }}/&amp;m=c&{{token_id}}={{token}}" class="rojo" onclick="return confirm('seguro que desea eliminar este alimento?')">Eliminar</a></td> 
+                                {% endif %}
+                            </tr>
+                        {% endif %}
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+{% endblock %}

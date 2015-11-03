@@ -1,0 +1,36 @@
+{% extends '/index/index.html.twig' %} 
+
+{% block style %}
+    {{ parent() }}
+    <link rel="stylesheet" href="../styles/formulario.css" type="text/css" media="all" />
+{% endblock %}
+
+{% block contenido %}
+    {% block error %}
+        {% if error%}
+            <h4 id="error"><img src="../../images/error.png" alt="error">{{error}}
+
+                {{estado.errores['descripcion']}}<br> 
+            </h4>
+            <br><br>
+        {% endif %} 
+    {% endblock %}  
+    <div class="row">
+        <div class="col-md-4 col-md-offset-4">
+            <form role="form" id='formAltaEstado' method='POST' action="{{host}}estado/{{accion}}{% if estado %}/{{estado.id}}{% endif %}">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="form-group">
+                            <label> Descripción </label>
+                            <input {% if estado %} value="{{estado.descripcion}}"{% endif %} id="estado" class="form-group" type="text" name="params[estado][descripcion]" maxlength="60" placeholder="Ingrese una descripcion" required ><br><br>        
+                        </div>
+                    </div>
+                </div>
+
+                <button class="btn btn-primary" type="submit">Enviar</button>
+                <input type="hidden" value="0" name="aux" />
+                <input type="hidden" name="{{token_id}}" value="{{token}}">
+            </form>
+        </div>
+    </div>
+{% endblock %}

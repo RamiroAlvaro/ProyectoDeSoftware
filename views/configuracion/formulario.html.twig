@@ -1,0 +1,33 @@
+{% extends 'index/index.html.twig' %}   
+{% block script %}
+    {{ parent() }}
+{% endblock %}
+{% block style %}
+    {{ parent() }}
+    <link rel="stylesheet" href="../styles/formulario.css" type="text/css" media="all" />
+{% endblock %} 
+
+{% block contenido %}
+    {% block error %}
+        {% if error%}
+            <h4 id="error"><img src="../../images/error.png">{{error}}<br><br>
+
+                    {{configuracion.errores['clave']}}<br> 
+                    {{configuracion.errores['valor']}}
+                    <br>
+            </h4>
+            <br><br>
+                {% endif %} 
+    {% endblock %}  
+    <form id="formAltaAlimento" onsubmit="return validarConfiguracion()" method="POST" action="{{host}}configuracion/{{accion}}{% if configuracion.id %}/{{configuracion.id}}{% endif %}">
+        <label class="contact_form_label" for="clave" >Clave</label> 
+        <input {% if configuracion %}value="{{configuracion.clave}}"{% endif %} id="codigo" class="contact_form_input" type="text" placeholder="Ingrese una clave unica" name="params[configuracion][clave]" maxlength="50" readonly><br><br> 
+        <label class="contact_form_label" for="valor" >Valor</label> 
+        <input {% if configuracion %}value="{{configuracion.valor}}"{% endif %} maxlength="150" placeholder="Ingrese un Valor" id="descripcion" class="contact_form_input" type="text" name="params[configuracion][valor]" required>
+        <br><br>
+        <button class="submit" type="submit">Enviar</button>
+        
+        <input type="hidden" name="{{token_id}}" value="{{token}}">
+    </form>
+        
+{% endblock %}

@@ -1,0 +1,26 @@
+<div class="col-lg-4 col-lg-offset-2">
+        {% if session.get('autenticado')%}
+            <div class="col-lg-4 col-lg-offset-2"
+                <label>Hola, {{session.get('username')}} </label>
+            </div>
+        {% else %}
+            {% if error %}
+                <label>{{error}}</label>
+            {% endif %}
+                
+{#            <form action="{{host}}login" id="login" method="POST" class="form-inline" role="form">
+                <fieldset>
+                    <input type="hidden" value="1" name="enviar" />
+                    <div class="form-group">
+                        <input  name="username" class="form-control input-sm" type="text" placeholder="ingrese su email" />
+                    </div>
+                    <div class="form-group">
+                        <input  name="pass" class="form-control input-sm" type="password" placeholder="contraseña" />
+                    </div>
+                    <div class="form-group">
+                        <button class="btn btn-primary form-control btn-sm">ingresar</button>
+                    </div>
+                </fieldset>
+            </form>#}
+        {% endif %}
+</div>

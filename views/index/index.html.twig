@@ -1,0 +1,102 @@
+{% extends 'layout.html.twig' %}
+
+{% block script %}
+    {{ parent() }}
+    <script src="https://platform.linkedin.com/in.js">api_key: 772
+        ot2tfqntox5</script>
+    {% endblock %}
+    {% block style %}   
+        {{ parent() }}
+    <link rel="stylesheet" href="../../styles/elementos.css" type="text/css">
+{#    <link rel="stylesheet" href="../../styles/tablaFront.css" type="text/css">#}
+    <link rel="stylesheet" href="../../styles/linkedin.css" type="text/css">
+{% endblock %}
+
+{% block title %}Banco de Alimentos de La Plata - {{titulo}}{% endblock %} 
+{% block menu %}            
+    {% include 'elementos/menu.html.twig' with {'session': session, 'host': host} %}
+{% endblock %}
+{% block contenido %}  
+     <div class="row">
+        <div class="col-md-6">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="panel panel-default">
+                        <div class="panel-heading">Quiénes somos</div>
+                        <div class="panel-body">
+                            Somos una organización sin fines de lucro
+                            que tiene como misión la recuperación de alimentos
+                            para generar conciencia ambiental combatiendo                        
+                            el hambre y la desnutrición en la zona del Gran La Plata.
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="panel panel-default">
+                        <div class="panel-heading">Quiénes somos</div>
+                        <div class="panel-body">
+                            Recibimos donaciones de alimentos en nuestro depósito, 
+                            para que luego de ser clasificadas junto con un grupo 
+                            de voluntarios coordinados por el Jefe de Depósito, 
+                            puedan ser distribuidas a diversas entidades de La Plata, 
+                            Berisso y Ensenada.
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6 img-responsive text-center">
+            <img id="imagenFront" src="images/imagenFront.jpg" alt="imagenFront"> 
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-3">
+            <div class="thumbnail">
+                <img src="{{info.foto}}" class="photo" width="80" height="80" alt="Banco de alimentos">
+                <div class="caption">
+                    <h3>
+                        <a href="https://www.linkedin.com/pub/banco-de-alimentos-de-la-plata/a7/369/a77" target="_blank" class="url">
+                            <span class="given-name">{{info.nombre}}</span>
+                    </h3>
+                    <p>
+                        <b>{{info.industria}}</b>
+                        en
+                        <b class="org">LinkedIn</b>
+
+                        <span class="locality">{{info.ubicacion}}</span>
+                    </p>
+                    <p><a href="http://www.linkedin.com/pub/banco-de-alimentos-de-la-plata/a7/369/a77" class="btn btn-primary" role="button">Ver perfil</a> 
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="thumbnail">
+                <div class="caption text-center">
+                    <button href="#"  class="btn btn-danger btn-lg" role="button">Donar Ahora</button>
+                    <h3>Ayudanos a ayudar</h3>
+                    <p>Tu ayuda es importante</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="thumbnail">
+                <div class="caption text-center">
+                    <button href="#"  class="btn btn-danger btn-lg" role="button">Enviar ayuda</button>
+                    <h3>Conoce colaboradores</h3>
+                    <p>siempre presentes</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="thumbnail">
+                <div class="caption text-center">
+                    <button href="#"  class="btn btn-danger btn-lg" role="button">Sumate Hoy</button>
+                    <h3>Sos importante</h3>
+                    <p>con tu ayuda lo vamos a lograr</p>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}            

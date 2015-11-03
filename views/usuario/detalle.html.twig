@@ -1,0 +1,15 @@
+{% extends '/index/index.html.twig' %}   
+
+{% block style %}    
+    {{ parent() }}
+    <link rel="stylesheet" href="../../styles/listado.css" type="text/css" media="all">
+    <link rel="stylesheet" href="../../styles/tablas.css" type="text/css" media="all">
+    <link rel="stylesheet" href="../styles/formulario.css" type="text/css" media="all" />
+    <link rel="stylesheet" href="../styles/buttons.css" type="text/css" media="all" />
+{% endblock %}
+
+{% block contenido %}         
+    <label>Nombre: </label>{{usuario.username}}
+    <br>
+    <label>Mas Datos: </label> aca mas cosas
+{% endblock %}

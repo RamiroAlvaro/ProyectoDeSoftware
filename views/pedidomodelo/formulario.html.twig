@@ -1,0 +1,145 @@
+{% extends 'index/index.html.twig' %}   
+{% block script %}
+    {{ parent() }}
+    <script src="../vendors/bootstrap3/datePicker/moment.js"></script>
+    <script src="../vendors/bootstrap3/datePicker/datepicker.js"></script>
+{% endblock %}
+{% block style %}
+    {{ parent() }}
+{% endblock %} 
+
+{% block contenido %}
+    {% set i = 0 %}
+        {% block error %}
+            {% if error%}
+                <h4 id="error"><img src="../../images/error.png">{{error}}
+                    <br><br>
+                    {{ errores['pedidos'] }}<br>
+                    {{ errores['cantidad'] }}<br>
+                    {{ errores['descripcion'] }}<br>
+                    {{ errores['entidad'] }}<br>
+                    {{ errores['fecha'] }}<br>
+                    {{ errores['hora'] }}<br>
+
+                    <br><br>
+                </h4>
+                <br><br>
+            {% endif %} 
+        {% endblock %}  
+        <div class="row">
+            <div class="col-md-8 col-md-offset-2">
+                <form id="formAltaPedido" role="form" method="POST" action="{{host}}pedidomodelo/alta">
+                    <div class="form-group">
+                        <table id="table" class="table table-responsive table-hover text-center">
+                            <thead>
+                                <tr>
+                                    <th class="text-center">Código</th>
+                                    <th class="text-center">Contenido</th>
+                                    <th class="text-center">Vencimiento </th>
+                                    <th class="text-center">Stock</th>
+                                    <th class="text-center">Cantidad</th>
+                                    <th class="text-center">Seleccion</th>
+                                </tr>
+                            </thead>             
+                            <tbody>
+                                {% for alimento in pedidos %}
+                                    <tr>
+                                        <td>{{alimento.alimento_codigo | replace({'_': ' '}) }}</td>
+                                        <td>{{alimento.contenido}}</td>
+                                        <td>{{alimento.fecha_vencimiento}}</td>
+                                        <td>{{alimento.stock}}</td>
+                                        <td><input type="number" id="stockPedido" placeholder="0" min="0" max="{{alimento.stock}}" name="detalles[{{i}}][cantidad]"></td> 
+                                        <td><input type="checkbox" id="seleccionado" name="detalles[{{i}}][id]" value="{{alimento.id}}"></td>
+                                    </tr>
+                                    {% set i = i+1 %}
+                                        {% endfor %} 
+                                        </tbody>
+                                    </table>
+                                </div>
+                                <div class="form-group">
+                                    <div class="row">
+                                        <div class="col-md-3">
+                                            <label for="exampleInputEmail1">Descripción:</label>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <input required type="text" class="form-control" id="descripcion" name="params[descripcion]">
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <div class="row">
+                                        <div class="col-md-3">
+                                            <label for="exampleInputEmail1">Entidad receptora:</label>
+                                        </div>   
+                                        <div class="col-md-4">
+                                            <select class="form-control" id="estado_entidad_id" name="params[entidad]">
+                                                {% for entidad in entidades %}
+                                                    {% if entidad.baja == 0 %}
+                                                        <option value="{{entidad.id}}">{{entidad.razon_social}}</option>
+                                                    {% endif%}
+                                                {% endfor %}
+                                            </select>
+                                        </div>   
+                                    </div>   
+                                </div>   
+                                <div class="form-group">
+                                    <div class="row">
+                                    <label class="col-md-3 control-label" for="asdas">Fecha:</label>  
+                                        <div class="col-md-4">
+                                            <div class='input-group date' id='datetimepicker5'>
+                                                <input type='text' class="form-control" data-date-format="YYYY/MM/DD"
+                                                       id="fecha_vencimiento" name="params[fecha]" required />
+                                                <span class="input-group-addon">
+                                                    <span class="glyphicon glyphicon-calendar"></span>
+                                                </span>
+                                            </div>
+                                            <span class="help-block">elija una fecha mayor a la de hoy.</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <div class="row">
+                                        <label class="col-md-3 control-label" for="asdas">Hora:</label>  
+                                        <div class="col-md-4">
+                                            <div class='input-group date' id='datetimepicker4'>
+                                                <input type='text' class="form-control"  data-date-format="HH:mm"  name="params[hora]" required/>
+                                                <span class="input-group-addon">
+                                                    <span class="glyphicon glyphicon-time"></span>
+                                                </span>
+                                            </div>
+                                            <span class="help-block">elija la hora estimada del envio.</span>
+                                        </div>       
+                                    </div>       
+                                </div>
+                                <div class="form-group">
+                                    <label for="exampleInputEmail1">Con envio:</label>
+                                    <input type="checkbox" id="turno" name="params[con_envio]">
+                                </div>
+                                <button class="btn btn-primary" type="submit">Enviar</button>
+                                <input type="hidden" name="{{token_id}}" value="{{token}}">
+                            </form>
+                        </div>
+                    </div>
+                    <script type="text/javascript">
+                        var today = new Date();
+                        var dd = today.getDate() + 1;
+                        var mm = today.getMonth() + 1;
+                        var yyyy = today.getFullYear();
+
+                        tomorrow = yyyy + '/' + mm + '/' + dd;
+
+                        $(function() {
+                            $('#datetimepicker5').datetimepicker({
+                                pickTime: false,
+                                minDate: tomorrow
+                            });
+                        });
+                        $(function() {
+                            $('#datetimepicker4').datetimepicker({
+                                pickDate: false
+                            });
+                        });
+
+                    </script>
+                    {% endblock %}

@@ -1,0 +1,53 @@
+{% extends 'index/index.html.twig' %}   
+{% block script %}
+    {{ parent() }}
+{% endblock %}
+{% block style %}
+    {{ parent() }}
+    <link rel="stylesheet" href="../styles/formulario.css" type="text/css" media="all" />
+{% endblock %} 
+
+{% block contenido %}
+    {% block error %}
+        {% if error%}
+            <h4 id="error"><img src="../../images/error.png">{{error}}<br><br>
+
+                {{alimento.errores['codigo']}}<br> 
+                {{alimento.errores['descripcion']}}
+                <br>   
+            </h4>
+            <br><br>
+        {% endif %} 
+    {% endblock %}  
+    <div class="row">
+        <div class="col-md-4 col-md-offset-4">
+            
+            <form role="form" id="formAltaAlimento" onsubmit="return validarAlimento()" method="POST" action="{{host}}alimento/{{accion}}{% if alimento.id %}/{{alimento.id}}{% endif %}">
+                
+                <div class="row">
+                    <div class="form-group col-md-12">
+                        <label for="codigo" >C&oacute;digo</label> 
+                        <input {% if alimento %}value="{{alimento.codigo}}"{% endif %} id="codigo" class="form-control" type="text" placeholder="Ingrese un c&oacute;digo unico" name="params[alimento][codigo]" maxlength="30" required><br><br> 
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="form-group col-md-12">
+                        <label for="descripcion" >Descripci&oacute;n</label> 
+                        <input {% if alimento %}value="{{alimento.descripcion}}"{% endif %} maxlength="100" placeholder="Ingrese una descripci&oacute;n" id="descripcion" class="form-control" type="text" name="params[alimento][descripcion]" required>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="form-group col-md-12">
+                        <button class="btn btn-primary" type="submit">Enviar</button>
+                    </div>
+                </div>
+
+                <input type="hidden" name="{{token_id}}" value="{{token}}">
+            </form>
+        
+        </div>
+    </div>
+
+{% endblock %}

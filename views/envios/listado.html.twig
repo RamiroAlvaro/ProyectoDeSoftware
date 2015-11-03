@@ -1,0 +1,41 @@
+{% extends '/index/index.html.twig' %}   
+{% block script %}
+    {{ parent() }}
+    <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?v=3&sensor=true"></script>
+    <script type="text/javascript" src="../../scripts/googlemaps.js"></script>
+{% endblock %}
+{% block style %}    
+    {{ parent() }}   
+{% endblock %}
+
+{% block contenido %}
+    <div class="row">
+        <div class="col-md-12">
+            <table id="table" class="table table-responsive table-hove text-center">
+                <thead>
+                    <tr>
+                        <th class="text-center">Razón social</th>
+                        <th class="text-center">Domicilio</th>    
+                        <th class="text-center">Fecha de envío</th>
+                        <th class="text-center">Ubicacion</th>
+                    </tr>
+                </thead>
+                {% for envio in envios %}
+                <tbody>                
+                    <tr>
+                        <td>{{envio.razon_social}}</td>
+                        <td id="direccion">{{envio.domicilio}}</td> <!-- Formato: calle numero ciudad -->
+                        <td>{{envio.fecha}}</td>
+                        <td><button id="get-weather-btn" class="btn btn-primary btn-sm" onclick="loadMap('{{envio.domicilio}}');"><span>Mostrar en mapa</span></button></td>                             
+                    </tr>                
+                </tbody>
+                {% endfor %}
+            </table>  
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <div id="map-canvas" style="width:100%; height: 400px"></div>
+        </div>
+    </div>
+{% endblock %}

@@ -1,0 +1,19 @@
+{% extends 'layout.html.twig' %}
+{% block login %}
+<div id="loginForm">
+    {% if error %}
+        {{error}}
+    {% endif %}
+    <form action="{{host}}login" id="login" method="POST">
+         
+        <input type="hidden" value="1" name="enviar" />
+        <input  name="username" class="contact_form_input" type="text" placeholder="ingrese su email" />
+        <br/>
+        <input  name="pass" class="contact_form_input" type="password" placeholder="contraseña" />
+        <br/>
+        <button id="loginButton" class="submit" type="submit">ingresar</button>
+        <br/>
+    </form>
+</div>
+    
+    {% endblock %}

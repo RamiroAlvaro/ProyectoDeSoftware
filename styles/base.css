@@ -1,0 +1,13 @@
+
+#logo {
+    margin: 10px 0px 10px 0px ;
+}
+#footer_banco{
+    background-color: #333333;
+    height: 50px;
+}
+
+#footer_banco p{
+    margin-top: 15px;
+    color: #9d9d9d;
+}

@@ -1,0 +1,76 @@
+{% extends '/index/index.html.twig' %}   
+
+{% block style %}    
+    {{ parent() }}
+    <link rel="stylesheet" href="../../styles/tablas.css" type="text/css" media="all">
+    <link rel="stylesheet" href="../styles/formulario.css" type="text/css" media="all" />
+    <link rel="stylesheet" href="../styles/buttons.css" type="text/css" media="all" />
+{% endblock %}
+
+{% block contenido %}         
+
+    {% if session.accesoView('admin') %}
+        <div  class="row">
+            <div  class="col-md-1">
+                <a href="{{host}}pedidomodelo/alta" class="btn btn-second"><img src="../../images/add.png" alt="nuevo"> Nuevo Pedido</a><br><br><br>
+            </div>  
+        </div>
+    {% endif %}   
+    {% if mensaje != '' %}
+        <h4 id="mensajeExito"><img src="../../images/ok.png" alt="ok"> {{ mensaje }} </h4>
+        {% endif %}                   
+    <div  class="row">
+        <div  class="col-md-12">
+            <table id="table" class="table table-responsive table-hover text-center">
+                <thead>
+                    <tr>
+                        <th class="text-center">Numero Pedido</th>
+                        <th class="text-center">Entidad</th>
+                        <th class="text-center">Fecha de Entrega</th>
+                        <th class="text-center">Hora de Entrega</th>
+                        <th class="text-center">Estado</th>
+                        <th class="text-center">Envio</th>
+                        {% if session.accesoView('gestion') %}
+                        <th class="text-center"></th>
+                        <th class="text-center">Acciones</th>
+                        <th class="text-center"></th>
+                        {% endif %}
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for pedido in pedidos %}
+                        {% if pedido.baja == 0 %}
+                            <tr>
+                                <td>{{ pedido.numero}}</td>
+                                <td>{{ pedido.razon_social}}</td>
+                                <td>{{ pedido.fecha}}</td>
+                                <td>{{ pedido.hora}}</td>
+                                {% if pedido.entregado == 0 %}
+                                    <td>Pendiente</td>
+                                {% else %}
+                                    <td>Entregado</td>
+                                {% endif %}
+                                {% if pedido.con_envio == 0 %}
+                                    <td>No</td>
+                                {% else %}
+                                    <td>Si</td>
+                                {% endif %}
+                                {% if session.accesoView('gestion') %}
+                                <td><a class="btn" href="{{host}}pedidomodelo/detalle/{{ pedido.numero}}"><img src="../../images/preview.png" alt="detalle">Detalle</a></td> 
+                                        
+                                        {% if pedido.entregado == 0 %}                                        
+                                            <td><a class="btn" href="{{host}}pedidomodelo/entregar/{{ pedido.numero }}/&amp;m=c&{{token_id}}={{token}}"><img src="../../images/edit.png" alt="editar">Entregar</a></td>
+                                            <td><a class="btn"href="{{host}}pedidomodelo/eliminar/{{ pedido.numero }}/&amp;m=b&{{token_id}}={{token}}" onclick="return confirm('seguro que desea eliminar este pedido?')"><img src="../../images/delete.png" alt="borrar">Eliminar</a></td> 
+                                        {% else %}
+                                            <td><a class="btn" href="#" disabled><img src="../../images/edit.png" alt="editar">Entregar</a></td>
+                                            <td><a class="btn" href="#" disabled><img src="../../images/delete.png" alt="borrar">Eliminar</a></td> 
+                                        {% endif %}
+                                    {% endif %}
+                            </tr>
+                        {% endif %}
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+{% endblock %}

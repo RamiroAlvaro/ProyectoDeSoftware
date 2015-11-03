@@ -1,0 +1,49 @@
+{% extends '/index/index.html.twig' %}   
+
+{% block style %}    
+    {{ parent() }}
+    <link rel="stylesheet" href="../../styles/tablas.css" type="text/css" media="all">
+{% endblock %}
+
+{% block contenido %}
+
+
+    {% if session.accesoView('admin') %}
+        <div  class="row">
+            <div  class="col-md-1">
+                <a href="{{host}}estado/alta"  class="btn btn-second"><img src="../../images/add.png" alt="nuevo estado"> Nuevo Estado</a><br><br><br>
+            </div>
+        </div>
+    {% endif %}
+    {% if mensaje != '' %}
+        <h4 id="mensajeExito"><img src="../../images/ok.png" alt="ok"> {{ mensaje }} </h4>
+        {% endif %}
+    <div  class="row">
+        <div  class="col-md-12">
+            <table id="table" class="table table-responsive table-hover text-center">
+                <thead>
+                    <tr>
+                        <th class="text-center">Descripci&oacute;n</th> 
+                        {% if session.accesoView('gestion') %}
+                        <th class="text-right"> Acciones </th>
+                        <th class="text-center"></th>
+                        {% endif %}
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for estado in estados %}
+                        {% if estado.baja == 0 %}
+                            <tr>
+                                <td>{{ estado.descripcion }}</td>                           
+                                {% if session.accesoView('gestion') %}
+                                    <td><a href="{{host}}estado/modificar/{{ estado.id }}/&amp;m=c&{{token_id}}={{token}}"><img src="../../images/edit.png" alt="editar">Modificar</a></td>
+                                    <td><a href="{{host}}estado/eliminar/{{ estado.id }}/&amp;m=b&{{token_id}}={{token}}" onclick="return confirm('seguro que desea eliminar este estado?')"><img src="../../images/delete.png" alt="borrar">Eliminar</a></td> 
+                                        {% endif %}
+                            </tr>
+                        {% endif %}
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+{% endblock %}

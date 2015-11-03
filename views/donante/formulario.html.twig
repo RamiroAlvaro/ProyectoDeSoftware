@@ -1,0 +1,84 @@
+{% extends '/index/index.html.twig' %}   
+
+{% block style %}    
+    {{ parent() }}
+    <link rel="stylesheet" href="../styles/formulario.css" type="text/css" media="all" />
+{% endblock %}
+
+{% block contenido %}
+    {% block error %}
+        {% if error%}
+            <h4 id="error"><img src="../../images/error.png">{{error}}<br><br> 
+                {{donante.errores['razon_social']}}<br> 
+                {{donante.errores['apellido_contacto']}}<br>
+                {{donante.errores['nombre_contacto']}}<br>
+                {{donante.errores['telefono_contacto']}}<br> 
+                {{donante.errores['mail_contacto']}}<br>
+                {{donante.errores['domicilio_contacto']}}<br>    
+
+
+            </h4><br><br>
+        {% endif %} 
+    {% endblock %} 
+    <div class="row">
+        <div class="col-md-4 col-md-offset-4">
+            <form id="formAltaDonante"  role="form" method="POST" action="{{host}}donante/{{accion}}{% if donante %}/{{donante.getId}}{% endif %}">
+
+                <div class="form-group">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <label  for="razon_social" >Razon Social</label> 
+                            <input {% if donante %}value="{{donante.getRazonSocial}}"{% endif %} id="razon_social" class="form-control" type="text" name="params[donante][razon_social]" maxlength="100" placeholder="Ingrese una razon social" required ><br><br>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <label  for="apellido_contacto" >Apellido</label> 
+                            <input {% if donante %}value="{{donante.getApellidoContacto}}"{% endif %} id="apellido_contacto" class="form-control" type="text" name="params[donante][apellido_contacto]" maxlength="50" placeholder="Ingrese el apellido" required ><br><br>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <label  for="nombre_contacto" >Nombre</label> 
+                            <input {% if donante %}value="{{donante.getNombreContacto}}"{% endif %} id="nombre_contacto" class="form-control" type="text" name="params[donante][nombre_contacto]" maxlength="50" placeholder="Ingrese el nombre" required ><br><br>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <label  for="telefono_contacto" >Telefono</label> 
+                            <input {% if donante %}value="{{donante.getTelefonoContacto}}"{% endif %} id="telefono_contacto" class="form-control" type="text" name="params[donante][telefono_contacto]" maxlength="30" placeholder="Ingrese el telefono" required ><br><br>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <label  for="mail_contacto" >E-Mail</label> 
+                            <input {% if donante %}value="{{donante.getMailContacto}}"{% endif %} id="mail_contacto" class="form-control" type="text" name="params[donante][mail_contacto]" maxlength="50" placeholder="Ingrese el e-mail" required ><br><br>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <label  for="domicilio_contacto" >Domicilio</label> 
+                            <input {% if donante %}value="{{donante.getDomicilioContacto}}"{% endif %} id="domicilio_contacto" class="form-control" type="text" name="params[donante][domicilio_contacto]" maxlength="200" placeholder="Ingrese el domicilio" required ><br><br>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <button class="submit" type="submit">Enviar</button>
+                </div>
+
+                <input type="hidden" name="{{token_id}}" value="{{token}}">
+
+            </form>
+        </div>
+    </div>
+{% endblock %}
